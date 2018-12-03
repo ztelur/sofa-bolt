@@ -69,6 +69,7 @@ public class ConnectionPool implements Scannable {
         if (null == connection) {
             return;
         }
+        // 使用了copyOnWriteArrayList
         boolean res = this.conns.addIfAbsent(connection);
         if (res) {
             connection.increaseRef();

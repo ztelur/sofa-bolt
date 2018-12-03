@@ -593,6 +593,7 @@ public class DefaultConnectionManager implements ConnectionManager, ConnectionHe
             initialTask = this.connTasks.get(poolKey);
             if (null == initialTask) {
                 initialTask = new RunStateRecordedFutureTask<ConnectionPool>(callable);
+                // 如果putIfAbsent返回的task不为空，则说明之前已经提交了一个task.run了，所以不需要继续run了。
                 initialTask = this.connTasks.putIfAbsent(poolKey, initialTask);
                 if (null == initialTask) {
                     initialTask = this.connTasks.get(poolKey);
